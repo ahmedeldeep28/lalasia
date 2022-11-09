@@ -5,11 +5,12 @@ import Row from "./../components/layout/Grid";
 import HeadSection from "./../components/element/HeadSection";
 import TeamCard from "./../components/cards/TeamCard";
 import { fetchApi } from "../hooks/useApi";
+import { team } from './../data';
 
-function about({ team, error }) {
-  const teamList = team.map((memeber) => {
+function about({ teamData, error }) {
+  const teamList = teamData.map((memeber) => {
     return (
-      <div className="col-span-12 md:col-span-6 lg:col-span-4" key={memeber.id}>
+      <div className="col-span-12 md:col-span-6 lg:col-span-4" key={memeber._id}>
         <TeamCard memeberData={memeber} />
       </div>
     );
@@ -148,19 +149,19 @@ function about({ team, error }) {
 
 export default about;
 
-export async function getStaticProps() {
+export  function getStaticProps() {
   try {
-    let team = await fetchApi("team");
+    const teamData = team
     return {
       props: {
-        team,
+        teamData,
         error: null,
       },
     };
   } catch (error) {
     return {
       props: {
-        team: [],
+        teamData: [],
         error,
       },
     };

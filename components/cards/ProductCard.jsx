@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 function ProductCard({productData}) {
-  const {id,title,price,image,materal,category,color} = productData
+  const {id,title,url,price,image,materal,category,color} = productData
   return (
     <div>
       <Image
@@ -19,7 +19,7 @@ function ProductCard({productData}) {
 
         <p className="text-p3 sm:text-p2 text-base capitalize font-light sm:font-light">{color.length} colors</p>
       </div>
-      <Link href={`/product/${id}`}>
+      <Link href={`/product/${url}`}>
         <h3 className="text-h4 sm:text-h3 text-title capitalize  transition cursor-pointer hover:text-primary">
           {title}
         </h3>

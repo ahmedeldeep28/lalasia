@@ -41,8 +41,8 @@ export default Article
 
 
 export async function getServerSideProps({ params }) {
-    const { articleId } = params;
-    const article = await fetchApi(`blog/${articleId}`);
+    const { articleUrl } = params;
+    const {article} = await fetchApi(`article/${articleUrl}`);
     return {
       props: {
         article,

@@ -17,7 +17,7 @@ function products({ products, error }) {
   return (
     <>
       <Head>
-      <title>Lalasia - Products</title>
+        <title>Lalasia - Products</title>
         <meta
           name="description"
           content="We display products based on the latest products we have, if you want to see our old products please enter the name of the item"
@@ -61,8 +61,12 @@ export default products;
 
 export async function getServerSideProps({ query }) {
   try {
-    const term = query.term || "";
-    let products = await fetchApi(`products?q=${term}`);
+    const { term } = query;
+
+    let { products } = await fetchApi(
+      `products${term ? `?title=${term}` : ""}`
+    );
+
     return {
       props: {
         products,
@@ -73,7 +77,7 @@ export async function getServerSideProps({ query }) {
     return {
       props: {
         products: [],
-        error: error,
+        error: "A server error occurred",
       },
     };
   }

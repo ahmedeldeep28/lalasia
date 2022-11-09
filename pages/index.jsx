@@ -172,10 +172,10 @@ export default function Home({products,error}) {
 }
 
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   
   try {
-    const products = await fetchApi("products?_start=0&_end=6");
+    const {products} = await fetchApi("products/popular");
     return {
       props: {
         products,
@@ -192,9 +192,5 @@ export async function getServerSideProps() {
     };
 
   }
-  return {
-    props: {
-      products,
-    },
-  };
+
 }

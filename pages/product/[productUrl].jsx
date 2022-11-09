@@ -96,8 +96,8 @@ function ProductDetail({ product }) {
 export default ProductDetail;
 
 export async function getServerSideProps({ params }) {
-  const { productId } = params;
-  const product = await fetchApi(`products/${productId}`);
+  const { productUrl } = params;
+  const {product} = await fetchApi(`product/${productUrl}`);
   return {
     props: {
       product,

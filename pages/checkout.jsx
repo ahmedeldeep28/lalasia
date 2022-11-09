@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { fetchApi } from "../hooks/useApi";
 import { toast } from "react-toastify";
 import { clearCart } from "../store/slice/cartSlice";
+import { governorates,cities } from "../data";
 
 function checkout() {
   const dispatch = useDispatch();
@@ -101,28 +102,19 @@ function checkout() {
   };
 
   const [gov, setGov] = useState([]);
-  const [cities, setSities] = useState([]);
+  const [citys, setCitys] = useState([]);
 
-  const getGovernorates = async () => {
-    try {
-      const data = await fetchApi("governorates");
-      setGov(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
-  const getCitiesByIdGov = async (id) => {
-    try {
-      const data = await fetchApi(`cities?governorate_id=${id}`);
-      setSities(data);
-    } catch (error) {
-      console.log(error);
-    }
+
+  const getCitiesByIdGov =  (id) => {
+    
+    const data = cities.filter((item) => item.governorate_id == id)
+    setCitys(data);
+
   };
 
   useEffect(() => {
-    getGovernorates();
+    setGov(governorates);
   }, []);
 
   return (
@@ -199,10 +191,10 @@ function checkout() {
                       <div className="col-span-2">
                         <FormSelect name="city" label="city" propsInput={props}>
                           <option>slecet city</option>
-                          {cities.map((citie) => {
+                          {citys.map((city) => {
                             return (
-                              <option key={citie.id} value={citie.city_name_en}>
-                                {citie.city_name_en}
+                              <option key={city.id} value={city.city_name_en}>
+                                {city.city_name_en}
                               </option>
                             );
                           })}

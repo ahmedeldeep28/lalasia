@@ -4,8 +4,8 @@ function ReviewCard() {
   return (
     <div className="bg-white p-5 shadow">
       <Image
-        width="40px"
-        height="40px"
+        width={40}
+        height={40}
         src="/icons/quote-up.png"
         alt="search"
       />
@@ -17,8 +17,8 @@ function ReviewCard() {
         <div className="flex items-center">
           <Image
             className="rounded-full"
-            width="50px"
-            height="50px"
+            width={50}
+            height={50}
             src="/team.png"
             alt="team"
           />
@@ -27,8 +27,8 @@ function ReviewCard() {
         <div className="flex items-center">
           <Image
             className="rounded-full"
-            width="24px"
-            height="24px"
+            width={24}
+            height={24}
             src="/icons/star.png"
             alt="star"
           />

@@ -1,9 +1,9 @@
 import axios from "axios";
-export const baseUrl = 'http://localhost:5000';
+export const baseUrl = 'https://lalasia-api.vercel.app/';
 
 
 export async function fetchApi(endPond) {
-
+    console.log(`${baseUrl}/${endPond}`)
     try {
         const { data } = await axios.get(`${baseUrl}/${endPond}`);
         return data
@@ -18,7 +18,11 @@ export async function deleteApi(endPond) {
         const { data } = await axios.delete(`${baseUrl}/${endPond}`);
         return data
     } catch (error) {
-        throw error.message
+        if (error.response) {
+            throw error.response.data.message
+        } else {
+            throw error.message
+        }
     }
 
 }
