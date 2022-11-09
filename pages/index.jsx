@@ -37,7 +37,7 @@ export default function Home({products,error}) {
         <div className="container relative">
           <span className="absolute top-0 left-0 ">
             <Image
-              src="/icons/arrow.png"
+              src="/icons/Arrow.png"
               width="200%"
               height="200%"
               layout="fixed"
