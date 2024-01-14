@@ -11,9 +11,7 @@ export function FormInput({ propsInput,className, name, label, type, ...rest }) 
       <Field
         className={`form-input 
         ${(errors[name] && touched[name]) ? "notValid" : ""} 
-        ${(!errors[name] && touched[name]) ? "isValid" : ""}
-        
-          `}
+        ${(!errors[name] && touched[name]) ? "isValid" : ""}`}
         type={type}
         name={name}
         {...rest}

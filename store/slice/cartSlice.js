@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { deleteApi, postApi, fetchApi, putApi } from '../../hooks/useApi';
 
 export const getCart = createAsyncThunk("cart/getCart", async (_, thunkAPI) => {
     let { rejectWithValue } = thunkAPI;

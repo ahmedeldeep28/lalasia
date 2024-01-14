@@ -3,7 +3,7 @@ import Hero from "./../components/section/Hero";
 import ProductCard from "./../components/cards/ProductCard";
 import Row from "./../components/layout/Grid";
 import InputSearch from "./../components/element/InputSearch";
-import { fetchApi } from "../hooks/useApi";
+import axiosApi from "../api/axios-global";
 
 function products({ products, error }) {
   const productList = products.map((product) => {
@@ -63,9 +63,7 @@ export async function getServerSideProps({ query }) {
   try {
     const { term } = query;
 
-    let { products } = await fetchApi(
-      `products${term ? `?title=${term}` : ""}`
-    );
+    const { products } = await axiosApi.get(`/products`,{params: {term}});
 
     return {
       props: {

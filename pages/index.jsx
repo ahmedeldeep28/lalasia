@@ -7,20 +7,17 @@ import Benfits from "./../components/section/Benfits";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
-import {fetchApi} from "../hooks/useApi";
-
-
 import "swiper/css";
 import "swiper/css/navigation";
+import axiosApi from "../api/axios-global";
 
-
-export default function Home({products,error}) {
-
+export default function Home({ products = [], error }) {
+  console.log(error);
   const productList = products.map((product) => {
     return (
-        <SwiperSlide key={product.id}>
-          <ProductCard   productData={product}/>
-        </SwiperSlide>
+      <SwiperSlide key={product.id}>
+        <ProductCard productData={product} />
+      </SwiperSlide>
     );
   });
 
@@ -75,72 +72,73 @@ export default function Home({products,error}) {
 
       <section className="py-16">
         <div className="container">
-          <HeadSection 
-              name="Product"
-              title="Our popular products"
-              text="Pellentesque etiam blandit in tincidunt at donec. Eget ipsum dignissim placerat nisi, adipiscing mauris non purus parturient."
-              center={true}
+          <HeadSection
+            name="Product"
+            title="Our popular products"
+            text="Pellentesque etiam blandit in tincidunt at donec. Eget ipsum dignissim placerat nisi, adipiscing mauris non purus parturient."
+            center={true}
           />
-          {error ? 
-          <p className="text-red-500 text-h5 p-5 bg-red-100 rounded">{error}</p>
-          : 
-          <>
-            {products.length === 0 ? 
-            <p className="text-red-500 text-h5 p-5 bg-red-100 rounded">search not found</p>
-            :
-            <Swiper
-            breakpoints={{
-              0: {
-                slidesPerView: 1,
-                spaceBetween: 30,
-              },
-              768: {
-                slidesPerView: 2,
-                spaceBetween: 20,
-              },
-              1024: {
-                slidesPerView: 3,
-                spaceBetween: 30,
-              },
-              1536: {
-                slidesPerView: 4,
-                spaceBetween: 40,
-              }, 
-            }}
-            navigation={true}
-            pagination={{
-              clickable: true,
-            }}
-            modules={[Navigation]}
-            className="py-12"
-          >
-          {productList}
-          </Swiper>
-          }
-          </>
-          }
-         
+          {error ? (
+            <p className="text-red-500 text-h5 p-5 bg-red-100 rounded">
+              {error}
+            </p>
+          ) : (
+            <>
+              {products.length === 0 ? (
+                <p className="text-red-500 text-h5 p-5 bg-red-100 rounded">
+                  search not found
+                </p>
+              ) : (
+                <Swiper
+                  breakpoints={{
+                    0: {
+                      slidesPerView: 1,
+                      spaceBetween: 30,
+                    },
+                    768: {
+                      slidesPerView: 2,
+                      spaceBetween: 20,
+                    },
+                    1024: {
+                      slidesPerView: 3,
+                      spaceBetween: 30,
+                    },
+                    1536: {
+                      slidesPerView: 4,
+                      spaceBetween: 40,
+                    },
+                  }}
+                  navigation={true}
+                  pagination={{
+                    clickable: true,
+                  }}
+                  modules={[Navigation]}
+                  className="py-12"
+                >
+                  {productList}
+                </Swiper>
+              )}
+            </>
+          )}
         </div>
       </section>
 
-      
       <section className="py-16">
         <div className="container">
-        <HeadSection 
-              name="Testimonials"
-              title="What our customer say"
-              text="Pellentesque etiam blandit in tincidunt at donec. Eget ipsum dignissim placerat nisi, adipiscing mauris non purus parturient."
-              center={true}
+          <HeadSection
+            name="Testimonials"
+            title="What our customer say"
+            text="Pellentesque etiam blandit in tincidunt at donec. Eget ipsum dignissim placerat nisi, adipiscing mauris non purus parturient."
+            center={true}
           />
           <Swiper
             breakpoints={{
-              0: {slidesPerView: 1},
-              768: {slidesPerView: 2},
-              1024: {slidesPerView: 3},
-              1536: {slidesPerView: 4}, 
+              0: { slidesPerView: 1 },
+              768: { slidesPerView: 2 },
+              1024: { slidesPerView: 3 },
+              1536: { slidesPerView: 4 },
             }}
             spaceBetween={20}
-
             navigation={true}
             pagination={{
               clickable: true,
@@ -162,20 +160,16 @@ export default function Home({products,error}) {
             <SwiperSlide>
               <ReviewCard />
             </SwiperSlide>
-
           </Swiper>
         </div>
       </section>
-
     </>
   );
 }
 
-
 export async function getStaticProps() {
-  
   try {
-    const {products} = await fetchApi("products/popular");
+    const { products } = await axiosApi.get("/products/popular");
     return {
       props: {
         products,
@@ -187,10 +181,7 @@ export async function getStaticProps() {
       props: {
         products: [],
         error: error,
-
-      }
+      },
     };
-
   }
-
 }

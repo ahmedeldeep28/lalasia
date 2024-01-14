@@ -4,7 +4,6 @@ import Hero from "./../components/section/Hero";
 import Row from "./../components/layout/Grid";
 import HeadSection from "./../components/element/HeadSection";
 import TeamCard from "./../components/cards/TeamCard";
-import { fetchApi } from "../hooks/useApi";
 import { team } from './../data';
 
 function about({ teamData, error }) {

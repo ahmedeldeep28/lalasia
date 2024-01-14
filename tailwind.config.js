@@ -93,7 +93,6 @@ module.exports = {
       },
       backgroundPosition: {
         'input-icon': 'right calc(0.375em + 0.1875rem) center',
-
       }
 
     },

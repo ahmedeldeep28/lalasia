@@ -7,7 +7,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { FormInput, FormSelect } from "../components/element/Form";
 import * as Yup from "yup";
 import { useEffect, useState } from "react";
-import { fetchApi } from "../hooks/useApi";
 import { toast } from "react-toastify";
 import { clearCart } from "../store/slice/cartSlice";
 import { governorates,cities } from "../data";

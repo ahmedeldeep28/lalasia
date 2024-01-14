@@ -1,10 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { postApi, fetchApi } from '../../hooks/useApi';
+import { postApi } from '../../hooks/useApi';
+import axiosApi from '../../api/axios-global';
 
 export const loginAcounte = createAsyncThunk("user/loginAcounte", async (userData, thunkAPI) => {
     let { rejectWithValue } = thunkAPI;
     try {
-        const [findUser] = await fetchApi(`users?email=${userData.email}`);
+        const [findUser] = await axiosApi.get(`/users?email=${userData.email}`);
         console.log(findUser);
         console.log(userData);
         if (findUser.length === 0) {
@@ -25,11 +26,11 @@ export const loginAcounte = createAsyncThunk("user/loginAcounte", async (userDat
 export const createAcount = createAsyncThunk("user/createAcount", async (userData, thunkAPI) => {
     let { rejectWithValue } = thunkAPI;
     try {
-        const findUser = await fetchApi(`users?email=${userData.email}`);
+        const findUser = await axiosApi.get(`/users?email=${userData.email}`);
         if (findUser.length !== 0) {
             return rejectWithValue("This email already exists")
         } else {
-            let res = await postApi(undefined, "users", userData);
+            let res = await axiosApi.post("/users", userData);
             localStorage.setItem("secret", res.secret);
             return res
         }
@@ -44,7 +45,7 @@ export const getUser = createAsyncThunk("user/getUser", async (userData, thunkAP
     let secret = localStorage.getItem("secret");
 
     try {
-        const [findUser] = await fetchApi(`users?secret=${secret}`);
+        const [findUser] = await axiosApi.get(`/users?secret=${secret}`);
         if (findUser) {
             return findUser
         } else {

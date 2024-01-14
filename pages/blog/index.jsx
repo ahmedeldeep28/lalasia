@@ -3,7 +3,7 @@ import Head from "next/head";
 import Row from "../../components/layout/Grid";
 import BlogCard from "../../components/cards/BlogCard";
 import Hero from "../../components/section/Hero";
-import { fetchApi } from "../../hooks/useApi";
+import axiosApi from "../../api/axios-global";
 
 function blogs({ articles, error }) {
   const articlesList = articles.map((article) => {
@@ -83,7 +83,7 @@ export default blogs;
 export async function getServerSideProps({ query }) {
   try {
     const category = query.category || null;
-    let { articles } = await fetchApi(`articles${category ? `/${category}` : ""}`
+    const { articles } = await axiosApi.get(`/articles${category ? `/${category}` : ""}`
     );
 
     return {

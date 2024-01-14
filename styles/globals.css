@@ -10,29 +10,29 @@ body {
 @layer components {
   /* create button */
   .btn {
-    @apply py-3.5 px-7 text-h5  text-center capitalize transition ;
+    @apply py-3.5 px-7 text-h5  text-center capitalize transition disabled:opacity-60;
   }
   .btn-sm {
-    @apply py-1.5 px-2.5 text-sm  text-center font-normal capitalize transition ;
+    @apply py-1.5 px-2.5 text-sm  text-center font-normal capitalize transition disabled:opacity-60;
   }
   .btn-md {
-    @apply py-2.5 px-5 text-base text-center  font-medium capitalize transition ;
+    @apply py-2.5 px-5 text-base text-center font-medium capitalize transition disabled:opacity-60;
   }
   .btn-primary {
-    @apply bg-primary text-white hover:bg-primary-500;
+    @apply bg-primary text-white hover:enabled:bg-primary-500;
   }
   .btn-secondary {
-    @apply bg-secondary text-white hover:bg-secondary-500;
+    @apply bg-secondary text-white hover:enabled:bg-secondary-500;
   }
   .btn-light {
     @apply bg-white text-title border;
   }
   .btn-danger {
-    @apply bg-red-700 text-white hover:bg-red-600;
+    @apply bg-red-700 text-white hover:enabled:bg-red-600;
   }
   /* nav bar */
   .nav__link {
-    @apply capitalize text-p2 font-medium hover:text-primary
+    @apply capitalize text-p2 font-medium hover:enabled:text-primary
   }
   .nav__link-active{
     @apply text-primary
