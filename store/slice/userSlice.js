@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { postApi } from '../../hooks/useApi';
 import axiosApi from '../../api/axios-global';
 
 export const loginAcounte = createAsyncThunk("user/loginAcounte", async (userData, thunkAPI) => {
