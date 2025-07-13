@@ -5,8 +5,6 @@ export const loginAcounte = createAsyncThunk("user/loginAcounte", async (userDat
     let { rejectWithValue } = thunkAPI;
     try {
         const [findUser] = await axiosApi.get(`/users?email=${userData.email}`);
-        console.log(findUser);
-        console.log(userData);
         if (findUser.length === 0) {
             return rejectWithValue("this not find email")
         } else {

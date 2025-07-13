@@ -2,9 +2,9 @@ import Image from "next/image";
 import HeadSection from "../element/HeadSection";
 import Row from "../layout/Grid";
 
-function Benfits() {
+function Benefits() {
   return (
-    <section className="benfits py-16">
+    <section className="benefits py-16">
       <div className="container">
         <HeadSection 
             name="Benefits"
@@ -68,4 +68,4 @@ function Benfits() {
   );
 }
 
-export default Benfits;
+export default Benefits;

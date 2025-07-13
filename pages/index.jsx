@@ -3,7 +3,7 @@ import ProductCard from "../components/cards/ProductCard";
 import ReviewCard from "../components/cards/ReviewCard";
 import InputSearch from "./../components/element/InputSearch";
 import HeadSection from "./../components/element/HeadSection";
-import Benfits from "./../components/section/Benfits";
+import Benefits from "./../components/section/Benefits";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
@@ -12,7 +12,7 @@ import "swiper/css/navigation";
 import axiosApi from "../api/axios-global";
 
 export default function Home({ products = [], error }) {
-  console.log(error);
+  
   const productList = products.map((product) => {
     return (
       <SwiperSlide key={product.id}>
@@ -68,7 +68,7 @@ export default function Home({ products = [], error }) {
         </div>
       </section>
 
-      <Benfits />
+      <Benefits />
 
       <section className="py-16">
         <div className="container">

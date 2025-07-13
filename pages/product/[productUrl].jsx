@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import axiosApi from "../../api/axios-global";
 
 function ProductDetail({ product }) {
-  const { id, title, image, desc, price, materal, color } = product;
+  const { id, title, image, desc, price, material, color } = product;
 
   const dispatch = useDispatch();
   const [loadAddCart, setLoadAddCart] = useState(false);
@@ -33,7 +33,7 @@ function ProductDetail({ product }) {
     }
     dispatch(addToCart(productData))
       .unwrap()
-      .then((data) => {
+      .then(() => {
         toast.success("Product added successfully", {
           position: toast.POSITION.BOTTOM_RIGHT,
         });
@@ -65,7 +65,7 @@ function ProductDetail({ product }) {
             </div>
             <div className="col-span-12 lg:col-span-6">
               <h1 className="text-h3 sm:text-h2 text-title">{title}</h1>
-              <p className="text-p3 md:text-p2 text-base mb-4">{materal}</p>
+              <p className="text-p3 md:text-p2 text-base mb-4">{material}</p>
               <h5 className="text-h5 font-medium mb-1">Description</h5>
               <p className="text-p4 md:text-p3 text-base mb-4">{desc}</p>
               <h5 className="text-h5 font-medium mb-1">Color</h5>
