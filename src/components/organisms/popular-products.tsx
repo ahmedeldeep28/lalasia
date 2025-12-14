@@ -1,8 +1,9 @@
-import { PRODUCTS } from "@/data";
 import { SectionHeader } from "../templates/section-header";
 import { ProductCarousel } from "./product-carousel";
+import { getProducts } from "@/services/product-services";
 
-export default function PopularProducts() {
+export default async function PopularProducts() {
+  const {data} = await getProducts();
   return (
     <section className="py-16">
       <div className="container">
@@ -13,7 +14,7 @@ export default function PopularProducts() {
           centered
         />
 
-        <ProductCarousel products={PRODUCTS} />
+        <ProductCarousel products={data} />
       </div>
     </section>
   );

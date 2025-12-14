@@ -2,14 +2,9 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  checkoutSchema,
-  CheckoutFormValues,
-} from "@/lib/schemas/checkout-schema";
+import { checkoutSchema, CheckoutFormValues } from "@/schemas/checkout-schema";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
   Card,
   CardContent,
@@ -28,22 +23,29 @@ import {
 import { useCartStore } from "@/stores/use-cart-store";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { checkoutOrder } from "@/services/checkout-services";
 
 export function CheckoutForm() {
   const router = useRouter();
-  const { clearCart } = useCartStore();
+  const { clearCart ,items} = useCartStore();
   const form = useForm<CheckoutFormValues>({
     resolver: zodResolver(checkoutSchema),
-    defaultValues: {
-      paymentMethod: "credit_card",
-    },
   });
 
-  function onSubmit(data: CheckoutFormValues) {
-    console.log(data);
-    toast.success("Order placed successfully!");
-    clearCart();
-    router.push("/");
+ async  function onSubmit(data: CheckoutFormValues) {
+  try {
+    const res = await checkoutOrder({
+      ...data,
+      items: items.map(({productId,quantity}) => ({  productId,quantity}))
+    })
+    console.log(res);
+     toast.success("Order placed successfully!");
+     clearCart();
+     router.push("/");
+    
+  } catch (error) {
+      console.log(error);
+  }
   }
 
   return (
@@ -55,13 +57,13 @@ export function CheckoutForm() {
             <CardTitle>Billing Details</CardTitle>
             <CardDescription>Enter your personal information.</CardDescription>
           </CardHeader>
-          <CardContent className="grid gap-4 sm:grid-cols-2">
+          <CardContent className="grid gap-4">
             <FormField
               control={form.control}
-              name="firstName"
+              name="customer.name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>First Name</FormLabel>
+                  <FormLabel>Full Name</FormLabel>
                   <FormControl>
                     <Input placeholder="John" {...field} />
                   </FormControl>
@@ -69,24 +71,12 @@ export function CheckoutForm() {
                 </FormItem>
               )}
             />
+      
             <FormField
               control={form.control}
-              name="lastName"
+              name="customer.email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Last Name</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Doe" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem className="sm:col-span-2">
                   <FormLabel>Email</FormLabel>
                   <FormControl>
                     <Input
@@ -101,9 +91,9 @@ export function CheckoutForm() {
             />
             <FormField
               control={form.control}
-              name="phone"
+              name="customer.phone"
               render={({ field }) => (
-                <FormItem className="sm:col-span-2">
+                <FormItem>
                   <FormLabel>Phone</FormLabel>
                   <FormControl>
                     <Input placeholder="+1 234 567 890" {...field} />
@@ -124,7 +114,7 @@ export function CheckoutForm() {
           <CardContent className="grid gap-4 sm:grid-cols-2">
             <FormField
               control={form.control}
-              name="address"
+              name="address.address"
               render={({ field }) => (
                 <FormItem className="sm:col-span-2">
                   <FormLabel>Address</FormLabel>
@@ -137,7 +127,7 @@ export function CheckoutForm() {
             />
             <FormField
               control={form.control}
-              name="city"
+              name="address.city"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>City</FormLabel>
@@ -150,7 +140,7 @@ export function CheckoutForm() {
             />
             <FormField
               control={form.control}
-              name="state"
+              name="address.state"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>State</FormLabel>
@@ -163,7 +153,7 @@ export function CheckoutForm() {
             />
             <FormField
               control={form.control}
-              name="zipCode"
+              name="address.zipCode"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Zip Code</FormLabel>
@@ -174,75 +164,8 @@ export function CheckoutForm() {
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="country"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Country</FormLabel>
-                  <FormControl>
-                    <Input placeholder="United States" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
           </CardContent>
         </Card>
-
-        {/* Payment Method */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Payment Method</CardTitle>
-            <CardDescription>
-              Select your preferred payment method.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <FormField
-              control={form.control}
-              name="paymentMethod"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <RadioGroup
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                      className="grid gap-4"
-                    >
-                      <FormItem className="flex items-center space-x-3 space-y-0 rounded-md border p-4">
-                        <FormControl>
-                          <RadioGroupItem value="credit_card" />
-                        </FormControl>
-                        <FormLabel className="font-normal cursor-pointer flex-1">
-                          Credit Card
-                        </FormLabel>
-                      </FormItem>
-                      <FormItem className="flex items-center space-x-3 space-y-0 rounded-md border p-4">
-                        <FormControl>
-                          <RadioGroupItem value="paypal" />
-                        </FormControl>
-                        <FormLabel className="font-normal cursor-pointer flex-1">
-                          PayPal
-                        </FormLabel>
-                      </FormItem>
-                      <FormItem className="flex items-center space-x-3 space-y-0 rounded-md border p-4">
-                        <FormControl>
-                          <RadioGroupItem value="bank_transfer" />
-                        </FormControl>
-                        <FormLabel className="font-normal cursor-pointer flex-1">
-                          Bank Transfer
-                        </FormLabel>
-                      </FormItem>
-                    </RadioGroup>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </CardContent>
-        </Card>
-
         <Button type="submit" className="w-full" size="lg">
           Place Order
         </Button>

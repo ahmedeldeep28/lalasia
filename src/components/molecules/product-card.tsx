@@ -4,20 +4,21 @@ import { Product } from "@/types";
 import { Heading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { formatPrice, getStrapiMedia } from "@/lib/utils";
 
 interface ProductCardProps {
   product: Product;
 }
 
 export const ProductCard = ({ product }: ProductCardProps) => {
-  const { title, slug, price, image, material, category, colors } = product;
-
+  const { title, slug, price, cover, material, category } = product;
+console.log(product)
   return (
     <Card className="group overflow-hidden gap-3 py-0 border-0 shadow-none">
       <CardHeader className="relative w-full aspect-12/9 overflow-hidden">
         <Image
           fill
-          src={image}
+          src={getStrapiMedia(cover.url)}
           alt={title}
           className="object-cover transition-transform group-hover:scale-105"
         />
@@ -26,10 +27,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
       <CardContent className="p-0">
         <div className="flex justify-between items-center">
           <Text color="muted" className="capitalize">
-            {category}
-          </Text>
-          <Text color="muted" className="capitalize">
-            {colors.length} colors
+            {category.title}
           </Text>
         </div>
 
@@ -48,7 +46,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
         </Text>
 
         <Heading as="h4" variant="h4">
-          ${price}
+          {formatPrice(price)}
         </Heading>
       </CardContent>
     </Card>

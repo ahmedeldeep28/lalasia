@@ -13,7 +13,7 @@ import { Text } from "../ui/text";
 import { Button } from "../ui/button";
 
 import Link from "next/link";
-import { cn } from "@/lib/utils";
+import { cn, formatPrice } from "@/lib/utils";
 
 type OrderSummaryProps = {
   isAction?: boolean;
@@ -24,8 +24,8 @@ export function OrderSummary({ isAction, className }: OrderSummaryProps) {
   const clearCart = useCartStore((state) => state.clearCart);
   const { getTotalPrice } = useCartStore();
   const subtotal = getTotalPrice();
-  const shipping = 5;
-  const total = subtotal + shipping;
+  const shippingCost = 200;
+  const total = subtotal + shippingCost;
 
   return (
     <Card className={cn(className)}>
@@ -35,17 +35,17 @@ export function OrderSummary({ isAction, className }: OrderSummaryProps) {
       <CardContent className="grid gap-4">
         <div className="flex items-center justify-between text-sm">
           <Text color="muted">Subtotal</Text>
-          <Text>${subtotal.toFixed(2)}</Text>
+          <Text>{formatPrice(subtotal)}</Text>
         </div>
         <div className="flex items-center justify-between text-sm">
           <Text color="muted">Shipping</Text>
-          <Text>${shipping.toFixed(2)}</Text>
+          <Text>{formatPrice(shippingCost)}</Text>
         </div>
 
         <Separator />
         <div className="flex items-center justify-between font-medium">
           <Text>Total</Text>
-          <Text>${total.toFixed(2)}</Text>
+          <Text>{formatPrice(total)}</Text>
         </div>
       </CardContent>
       {isAction && (

@@ -9,9 +9,10 @@ import Link from "next/link";
 import { Button } from "../ui/button";
 import { Heading } from "../ui/heading";
 import { Text } from "../ui/text";
+import { formatPrice, getStrapiMedia } from "@/lib/utils";
 
 export default function CartItem({ item }: { item: CartItemType }) {
-  const { id, title, quantity, color, image, price, slug } = item;
+  const { productId, title, quantity, cover, price, slug } = item;
   const removeItem = useCartStore((state) => state.removeItem);
 
   return (
@@ -20,7 +21,7 @@ export default function CartItem({ item }: { item: CartItemType }) {
         <Image
           width={600}
           height={600}
-          src={image}
+          src={getStrapiMedia(cover.url)}
           className="aspect-square"
           alt="product card"
         />
@@ -35,7 +36,7 @@ export default function CartItem({ item }: { item: CartItemType }) {
           <Button
             variant="ghost"
             size="icon"
-            onClick={() => removeItem(id, color)}
+            onClick={() => removeItem(productId)}
           >
             <Trash />
           </Button>
@@ -49,21 +50,15 @@ export default function CartItem({ item }: { item: CartItemType }) {
           </li>
           <li className="flex items-center gap-1">
             <Text variant="sm" className="font-semibold capitalize">
-              color
-            </Text>
-            <Text color="muted">{color}</Text>
-          </li>
-          <li className="flex items-center gap-1">
-            <Text variant="sm" className="font-semibold capitalize">
               price
             </Text>
-            <Text color="muted">{price}</Text>
+            <Text color="muted">{formatPrice(price)}</Text>
           </li>
           <li className="flex items-center gap-1">
             <Text variant="sm" className="font-semibold capitalize">
               total price
             </Text>
-            <Text color="muted">{(quantity * price).toFixed(2)}</Text>
+            <Text color="muted">{formatPrice(quantity * price)} </Text>
           </li>
         </ul>
       </div>

@@ -6,7 +6,6 @@ export const PRODUCTS: Product[] = [
     title: "Minimalist White Cuppboard",
     slug: "Minimalist-White-Cuppboard",
     price: 40.28,
-    colors: ["white", "black", "brown"],
     description:
       "Faucibus facilisi morbi pharetra quis sed. Vitae suspendisse facilisis facilisis ligula felis et a parturient aenean. Ac maecenas ultricies felis risus scelerisque duis posuere...",
     image: "/products/product (4).png",
@@ -18,7 +17,6 @@ export const PRODUCTS: Product[] = [
     title: "Wooden Cupboard 3 Row",
     slug: "Wooden-Cupboard-3-Row",
     price: 79.98,
-    colors: ["black", "gray", "brown"],
     description:
       "Faucibus facilisi morbi pharetra quis sed. Vitae suspendisse facilisis facilisis ligula felis et a parturient aenean. Ac maecenas ultricies felis risus scelerisque duis posuere...",
     image: "/products/product (6).png",
@@ -30,7 +28,6 @@ export const PRODUCTS: Product[] = [
     title: "Oval Gold Mirror",
     slug: "Oval-Gold-Mirror",
     price: 32.84,
-    colors: ["white", "gray", "brown"],
     description:
       "Faucibus facilisi morbi pharetra quis sed. Vitae suspendisse facilisis facilisis ligula felis et a parturient aenean. Ac maecenas ultricies felis risus scelerisque duis posuere...",
     image: "/products/product (1).png",
@@ -42,7 +39,6 @@ export const PRODUCTS: Product[] = [
     title: "Plant With Clay Stand",
     slug: "Plant-With-Clay-Stand",
     price: 61.3,
-    colors: ["white", "black", "gray", "brown"],
     description:
       "Faucibus facilisi morbi pharetra quis sed. Vitae suspendisse facilisis facilisis ligula felis et a parturient aenean. Ac maecenas ultricies felis risus scelerisque duis posuere...",
     image: "/products/product (7).png",
@@ -54,7 +50,6 @@ export const PRODUCTS: Product[] = [
     title: "White Aesthetic Chair",
     slug: "White-Aesthetic-Chair",
     price: 99.98,
-    colors: ["white", "gray"],
     description:
       "Faucibus facilisi morbi pharetra quis sed. Vitae suspendisse facilisis facilisis ligula felis et a parturient aenean. Ac maecenas ultricies felis risus scelerisque duis posuere...",
     image: "/products/product.png",

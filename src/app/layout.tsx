@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { MainLayout } from "@/components/templates/main-layout";
 import { Toaster } from "@/components/ui/sonner";
-
+import { ClerkProvider } from "@clerk/nextjs";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -68,19 +68,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <head>
-        <link
-          rel="stylesheet"
-          href="https://stijndv.com/fonts/Eudoxus-Sans.css"
-        />
-      </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased font-sans`}
-      >
-        <Toaster />
-        <MainLayout>{children}</MainLayout>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <head>
+          <link
+            rel="stylesheet"
+            href="https://stijndv.com/fonts/Eudoxus-Sans.css"
+          />
+        </head>
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased font-sans`}
+        >
+          <Toaster />
+          <MainLayout>{children}</MainLayout>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

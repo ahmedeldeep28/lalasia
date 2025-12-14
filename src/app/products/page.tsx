@@ -5,6 +5,7 @@ import { Text } from "@/components/ui/text";
 import { Heading } from "@/components/ui/heading";
 import { PRODUCTS } from "@/data";
 import { Metadata } from "next";
+import { getProducts } from "@/services/product-services";
 
 export const metadata:Metadata = {
   title: "products"
@@ -13,25 +14,13 @@ export const metadata:Metadata = {
 interface SearchParams {
   term?: string;
   category?: string;
-  minPrice?: string;
-  maxPrice?: string;
   page?: string;
 }
 
 export default async function ProductsPage(props: {
   searchParams: Promise<SearchParams>;
 }) {
-  const searchParams = await props.searchParams;
-  const term = searchParams.term || "";
-  const category = searchParams.category || "";
-  const allProducts = PRODUCTS;
-
-  const filteredProducts = allProducts.filter((product) => {
-    const matchesCategory = category === "" || product.category === category;
-
-    return matchesCategory;
-  });
-
+  const {data,meta} =  await getProducts()
   return (
     <>
       <HeroSection
@@ -49,11 +38,11 @@ export default async function ProductsPage(props: {
               Total Product
             </Heading>
             <Text variant="sm" color="muted">
-              Showing {filteredProducts.length} results
+              Showing {meta.pagination.total} results
             </Text>
           </div>
 
-          <ProductGrid products={filteredProducts} />
+          <ProductGrid products={data} />
         </div>
       </div>
     </>

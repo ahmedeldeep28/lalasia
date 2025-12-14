@@ -1,16 +1,16 @@
-import { Navbar } from "@/components/organisms/navbar";
+import { Header } from "@/components/organisms/header";
 import { Footer } from "@/components/organisms/footer";
 
 interface MainLayoutProps {
-    children: React.ReactNode;
+  children: React.ReactNode;
 }
 
 export const MainLayout = ({ children }: MainLayoutProps) => {
-    return (
-        <>
-            <Navbar />
-            <main>{children}</main>
-            <Footer />
-        </>
-    );
+  return (
+    <>
+      <Header />
+      <main>{children}</main>
+      <Footer />
+    </>
+  );
 };

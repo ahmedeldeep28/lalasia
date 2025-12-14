@@ -1,16 +1,21 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { Product } from "@/types";
+import { StrapiAsset } from "@/types";
 
-export interface CartItem extends Product {
+export interface CartItem {
+  productId: string;
+  title: string;
+  slug: string;
+  price: number;
+  discount: number;
+  cover: StrapiAsset;
   quantity: number;
-  color: string;
 }
 
 interface CartStore {
   items: CartItem[];
   addItem: (newItem: CartItem) => void;
-  removeItem: (id: string | number, color: string) => void;
+  removeItem: (id: string | number) => void;
   updateQuantity: (id: string | number, quantity: number) => void;
   clearCart: () => void;
   getTotalItems: () => number;
@@ -25,11 +30,13 @@ export const useCartStore = create<CartStore>()(
       addItem: (newItem) => {
         const items = get().items;
         const existingItem = items.find(
-          (item) => item.id === newItem.id && item.color === newItem.color
+          (item) => item.productId === newItem.productId
         );
-
         if (existingItem) {
-          get().updateQuantity(existingItem.id, existingItem.quantity + 1);
+          get().updateQuantity(
+            existingItem.productId,
+            existingItem.quantity + newItem.quantity
+          );
         } else {
           set({
             items: [...items, newItem],
@@ -37,18 +44,16 @@ export const useCartStore = create<CartStore>()(
         }
       },
 
-      removeItem: (id, color) => {
+      removeItem: (productId) => {
         set({
-          items: get().items.filter(
-            (item) => item.id !== id || item.color !== color
-          ),
+          items: get().items.filter((item) => item.productId !== productId),
         });
       },
 
-      updateQuantity: (id, quantity) => {
+      updateQuantity: (productId, quantity) => {
         set({
           items: get().items.map((item) =>
-            item.id === id ? { ...item, quantity } : item
+            item.productId === productId ? { ...item, quantity } : item
           ),
         });
       },
