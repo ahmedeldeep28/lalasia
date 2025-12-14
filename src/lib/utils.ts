@@ -13,10 +13,9 @@ export function getStrapiMedia(url: string): string {
 
 export function formatPrice(
   amount: number,
-  locale: string = 'eg-EG',
   currency: string = 'EGP'
 ): string {
-  return new Intl.NumberFormat(locale, {
+  return new Intl.NumberFormat("en-us", {
     style: 'currency',
     currency,
     minimumFractionDigits: 0,
