@@ -12,7 +12,6 @@ interface ProductCardProps {
 
 export const ProductCard = ({ product }: ProductCardProps) => {
   const { title, slug, price, cover, material, category } = product;
-console.log(product)
   return (
     <Card className="group overflow-hidden gap-3 py-0 border-0 shadow-none">
       <CardHeader className="relative w-full aspect-12/9 overflow-hidden">

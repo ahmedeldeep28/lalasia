@@ -3,24 +3,21 @@ import { ProductGrid } from "@/components/organisms/product-grid";
 import { HeroSection } from "@/components/organisms/hero-section";
 import { Text } from "@/components/ui/text";
 import { Heading } from "@/components/ui/heading";
-import { PRODUCTS } from "@/data";
 import { Metadata } from "next";
 import { getProducts } from "@/services/product-services";
+import { FilterProductParams } from "@/types";
 
 export const metadata:Metadata = {
   title: "products"
 }
 
-interface SearchParams {
-  term?: string;
-  category?: string;
-  page?: string;
-}
 
-export default async function ProductsPage(props: {
-  searchParams: Promise<SearchParams>;
+
+export default async function ProductsPage({searchParams}: {
+  searchParams: Promise<FilterProductParams>;
 }) {
-  const {data,meta} =  await getProducts()
+  const filters = await searchParams
+  const {data,meta} =  await getProducts(filters)
   return (
     <>
       <HeroSection

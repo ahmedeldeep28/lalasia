@@ -26,13 +26,13 @@ export const ProductFilter = () => {
   };
 
   const categories = [
-    "Furniture",
-    "Living Room",
-    "Dining",
-    "Office",
-    "Bedroom",
-    "Lighting",
-    "Decor",
+    "furniture",
+    "living room",
+    "dining",
+    "office",
+    "bedroom",
+    "lighting",
+    "decor",
   ];
 
   return (

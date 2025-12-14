@@ -22,3 +22,8 @@ export interface Product {
   };
 }
 
+export interface FilterProductParams {
+  term?: string;
+  category?: string;
+  page?: string;
+}

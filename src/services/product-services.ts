@@ -1,10 +1,24 @@
 import { publicApi } from "@/lib/api";
-import { ApiResponse, Product } from "@/types";
+import { ApiResponse, Product, FilterProductParams } from "@/types";
 
-export async function getProducts(): Promise<ApiResponse<Product>> {
+export async function getProducts(
+  searchParams: FilterProductParams
+): Promise<ApiResponse<Product>> {
+  const { term, category } = searchParams;
+  
   const res = await publicApi<ApiResponse<Product>>("/products", {
     params: {
       populate: "*",
+      filters: {
+        title: {
+          $contains: term,
+        },
+        category: {
+          title: {
+            $eq: category,
+          },
+        },
+      },
     },
   });
   return res;

@@ -49,7 +49,6 @@ export function createApiClient(config: ApiClientConfig) {
       },
     };
 
-console.log(requestURL)
     ApiRequestOptions = serializeBody(ApiRequestOptions);
 
     // Apply request interceptor
