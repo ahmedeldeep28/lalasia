@@ -1,13 +1,12 @@
 "use client";
 
 import { useCartStore } from "@/stores/use-cart-store";
-import CartItem from "../molecules/cart-item";
+import OrderLineItem from "../molecules/order-line-item";
 import { FeedbackState } from "../molecules/feedback-state";
+import { getStrapiMedia } from "@/lib/utils";
 
 export default function CartItemList() {
-  const items = useCartStore((state) => state.items);
-
-  if (!items.length) return null;
+  const { items, removeItem } = useCartStore((state) => state);
 
   if (items.length === 0) {
     return (
@@ -20,9 +19,18 @@ export default function CartItemList() {
   }
 
   return (
-    <div className="space-y-2 divide-y">
+    <div className="space-y-4 divide-y *:pb-4">
       {items.map((item) => {
-        return <CartItem key={item.productId} item={item} />;
+        return (
+          <OrderLineItem
+            key={item.productId}
+            title={item.title}
+            quantity={item.quantity}
+            cover={getStrapiMedia(item.cover.url)}
+            price={item.price}
+            onRemove={() => removeItem(item.productId)}
+          />
+        );
       })}
     </div>
   );

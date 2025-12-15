@@ -5,7 +5,6 @@ export async function getProducts(
   searchParams: FilterProductParams
 ): Promise<ApiResponse<Product>> {
   const { term, category } = searchParams;
-  
   const res = await publicApi<ApiResponse<Product>>("/products", {
     params: {
       populate: "*",
@@ -36,4 +35,18 @@ export async function getProductBySlug(slug: string): Promise<Product> {
     },
   });
   return data[0];
+}
+
+export async function getPopularProducts(): Promise<ApiResponse<Product>> {
+  const res = await publicApi<ApiResponse<Product>>("/products", {
+    params: {
+      populate: "*",
+      filters: {
+        isPopular: {
+          $eq: true,
+        },
+      },
+    },
+  });
+  return res;
 }

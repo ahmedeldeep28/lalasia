@@ -23,29 +23,41 @@ import {
 import { useCartStore } from "@/stores/use-cart-store";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { checkoutOrder } from "@/services/checkout-services";
+import { createOrder } from "@/services/order-services";
+import { useUser } from "@clerk/nextjs";
 
 export function CheckoutForm() {
   const router = useRouter();
-  const { clearCart ,items} = useCartStore();
+  const { clearCart, items } = useCartStore();
+  const { user } = useUser();
+
   const form = useForm<CheckoutFormValues>({
     resolver: zodResolver(checkoutSchema),
+    defaultValues: {
+      customer: {
+        name: user ? `${user.firstName} ${user.lastName}` : "",
+        email: user ? user.primaryEmailAddress?.emailAddress : "",
+        phone: user ? user.primaryPhoneNumber?.phoneNumber : "",
+      },
+    },
   });
 
- async  function onSubmit(data: CheckoutFormValues) {
-  try {
-    const res = await checkoutOrder({
-      ...data,
-      items: items.map(({productId,quantity}) => ({  productId,quantity}))
-    })
-    console.log(res);
-     toast.success("Order placed successfully!");
-     clearCart();
-     router.push("/");
-    
-  } catch (error) {
+  async function onSubmit(data: CheckoutFormValues) {
+    try {
+      const { orderId } = await createOrder({
+        ...data,
+        userId: user?.id,
+        items: items.map(({ productId, quantity }) => ({
+          productId,
+          quantity,
+        })),
+      });
+      router.push(`/order-tracking/${orderId}`);
+      toast.success("Order placed successfully!");
+      clearCart();
+    } catch (error) {
       console.log(error);
-  }
+    }
   }
 
   return (
@@ -71,7 +83,7 @@ export function CheckoutForm() {
                 </FormItem>
               )}
             />
-      
+
             <FormField
               control={form.control}
               name="customer.email"
@@ -166,10 +178,16 @@ export function CheckoutForm() {
             />
           </CardContent>
         </Card>
-        <Button type="submit" className="w-full" size="lg">
-          Place Order
+        <Button
+          type="submit"
+          className="w-full"
+          size="lg"
+          disabled={form.formState.isSubmitting}
+        >
+          {form.formState.isSubmitting ? "Placing..." : "Place Order"}
         </Button>
       </form>
     </Form>
   );
 }
+2;

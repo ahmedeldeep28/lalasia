@@ -1,4 +1,4 @@
-type FileMetaData = {
+export type FileMetaData = {
   url: string;
   mime: string;
   name: string;

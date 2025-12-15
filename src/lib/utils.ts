@@ -11,14 +11,15 @@ export function getStrapiMedia(url: string): string {
   return `${process.env.NEXT_PUBLIC_STRAPI_BASE_URL}${url}`;
 }
 
-export function formatPrice(
-  amount: number,
-  currency: string = 'EGP'
-): string {
+export function formatPrice(amount: number, currency: string = "EGP"): string {
   return new Intl.NumberFormat("en-us", {
-    style: 'currency',
+    style: "currency",
     currency,
     minimumFractionDigits: 0,
-    maximumFractionDigits: 0
-  }).format(amount)
+    maximumFractionDigits: 0,
+  }).format(amount);
+}
+
+export function getPriceAfterDiscount(price: number, discount: number): number {
+  return price - price * (discount / 100);
 }

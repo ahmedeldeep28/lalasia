@@ -70,7 +70,7 @@ export function createApiClient(config: ApiClientConfig) {
 
      if (!response.ok) {
         const errorBody = await response.json();
-        throw new Error(JSON.stringify(errorBody));
+        throw new Error(errorBody.error.message);
       }
       return response.json();
     } catch (error) {

@@ -7,7 +7,6 @@ export interface CartItem {
   title: string;
   slug: string;
   price: number;
-  discount: number;
   cover: StrapiAsset;
   quantity: number;
 }
