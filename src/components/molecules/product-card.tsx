@@ -4,14 +4,21 @@ import { Product } from "@/types";
 import { Heading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { formatPrice, getStrapiMedia } from "@/lib/utils";
+import {
+  formatPrice,
+  getPriceAfterDiscount,
+  getStrapiMedia,
+} from "@/lib/utils";
+import { Badge } from "../ui/badge";
 
 interface ProductCardProps {
   product: Product;
 }
 
 export const ProductCard = ({ product }: ProductCardProps) => {
-  const { title, slug, price, cover, material, category } = product;
+  const { title, slug, price, cover, material, category, discountPercentage } =
+    product;
+  const finalPrice = getPriceAfterDiscount(price, discountPercentage);
   return (
     <Card className="group overflow-hidden gap-3 py-0 border-0 shadow-none">
       <CardHeader className="relative w-full aspect-12/9 overflow-hidden">
@@ -21,6 +28,11 @@ export const ProductCard = ({ product }: ProductCardProps) => {
           alt={title}
           className="object-cover transition-transform group-hover:scale-105"
         />
+        {discountPercentage && (
+          <Badge className="absolute top-4 left-4">
+            {discountPercentage}% off
+          </Badge>
+        )}
       </CardHeader>
 
       <CardContent className="p-0">
@@ -44,8 +56,13 @@ export const ProductCard = ({ product }: ProductCardProps) => {
           {material}
         </Text>
 
-        <Heading as="h4" variant="h4">
-          {formatPrice(price)}
+        <Heading as="h4" variant="h4" className="flex items-center gap-2">
+          {formatPrice(finalPrice)}
+          {discountPercentage && (
+            <span className="text-base line-through text-muted-foreground">
+              {formatPrice(price)}
+            </span>
+          )}
         </Heading>
       </CardContent>
     </Card>

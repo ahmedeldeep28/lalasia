@@ -4,20 +4,24 @@ import { HeroSection } from "@/components/organisms/hero-section";
 import { Text } from "@/components/ui/text";
 import { Heading } from "@/components/ui/heading";
 import { Metadata } from "next";
-import { getProducts } from "@/services/product-services";
+
+// import { getProducts } from "@/services/product-services";
 import { FilterProductParams } from "@/types";
+import { Suspense } from "react";
+import { ProductGridSkeleton } from "@/components/organisms/product-grid-skeleton";
+import { ProductList } from "@/components/organisms/product-list";
 
-export const metadata:Metadata = {
-  title: "products"
-}
+export const metadata: Metadata = {
+  title: "products",
+};
 
-
-
-export default async function ProductsPage({searchParams}: {
+export default async function ProductsPage({
+  searchParams,
+}: {
   searchParams: Promise<FilterProductParams>;
 }) {
-  const filters = await searchParams
-  const {data,meta} =  await getProducts(filters)
+  const filters = await searchParams;
+  // const { data, meta } = await getProducts(filters); // Removed direct data fetching
   return (
     <>
       <HeroSection
@@ -30,6 +34,8 @@ export default async function ProductsPage({searchParams}: {
         <ProductFilter />
 
         <div className="mt-12">
+          {/* Removed "Total Product" heading and text block */}
+          {/*
           <div className="mb-6">
             <Heading as="h2" variant="h2" className="mb-2">
               Total Product
@@ -38,8 +44,11 @@ export default async function ProductsPage({searchParams}: {
               Showing {meta.pagination.total} results
             </Text>
           </div>
+          */}
 
-          <ProductGrid products={data} />
+          <Suspense fallback={<ProductGridSkeleton />}>
+            <ProductList filters={filters} />
+          </Suspense>
         </div>
       </div>
     </>

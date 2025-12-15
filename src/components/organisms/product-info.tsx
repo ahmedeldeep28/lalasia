@@ -10,19 +10,31 @@ import { QuantityInput } from "../molecules/quantity-input";
 import { useState } from "react";
 import { ShoppingCart } from "lucide-react";
 import { formatPrice } from "@/lib/utils";
+import { Badge } from "../ui/badge";
 
 interface ProductInfoProps {
   product: Product;
 }
 
 export function ProductInfo({ product }: ProductInfoProps) {
-  const { id, title, description, price, material, discount, cover, slug } =
-    product;
+  const {
+    id,
+    title,
+    description,
+    price,
+    material,
+    discountPercentage,
+    cover,
+    category,
+    stock,
+    slug,
+  } = product;
   const addItem = useCartStore((state) => state.addItem);
   const [quantity, setQuantity] = useState(1);
+  const finalPrice = price - price * (discountPercentage / 100);
 
   const handleAddToCart = () => {
-    addItem({ productId: id, price, cover, discount, title, slug, quantity });
+    addItem({ productId: id, price: finalPrice, cover, title, slug, quantity });
     setQuantity(1);
     toast("Added to cart!");
   };
@@ -30,12 +42,26 @@ export function ProductInfo({ product }: ProductInfoProps) {
   return (
     <div className="flex flex-col gap-4">
       <div>
-        <Heading as="h1" variant="h2" className="mb-2">
+        <Badge variant="outline">{category.title}</Badge>
+        <Heading as="h1" variant="h2">
           {title}
         </Heading>
-        <Heading variant="h3" className="font-bold text-primary">
-          {formatPrice(price)}
-        </Heading>
+        <Text className="mb-3">
+          available stock: {stock}
+        </Text>
+        <div className="space-y-1">
+          <Heading variant="h3" className="font-bold text-primary">
+            {formatPrice(finalPrice)}
+          </Heading>
+          {discountPercentage && (
+            <div className="space-x-2">
+              <span className="text-base line-through text-muted-foreground">
+                {formatPrice(price)}
+              </span>
+              <Badge>{discountPercentage}% off</Badge>
+            </div>
+          )}
+        </div>
       </div>
 
       <div className="space-y-1">
@@ -55,7 +81,7 @@ export function ProductInfo({ product }: ProductInfoProps) {
         </Text>
       </div>
       <div className="flex flex-1 gap-4">
-        <QuantityInput value={quantity} onChange={setQuantity} />
+        <QuantityInput value={quantity} onChange={setQuantity} max={stock} />
         <Button
           onClick={handleAddToCart}
           size="lg"

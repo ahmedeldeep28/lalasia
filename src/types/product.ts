@@ -6,7 +6,8 @@ export interface Product {
   title: string;
   slug: string;
   price: number;
-  discount: number;
+  discountPercentage: number;
+  stock: number;
   cover: StrapiAsset;
   media: StrapiAsset[];
   material: string;

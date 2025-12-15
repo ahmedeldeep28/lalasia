@@ -32,11 +32,11 @@ export function ProductImageGallery({ photos }: ProductImageGalleryProps) {
   }, [api, emblaThumbsApi]);
 
   return (
-    <Carousel setApi={setApi} className="w-full  space-y-2">
-      <CarouselContent>
+    <Carousel setApi={setApi} className="w-full space-y-2">
+      <CarouselContent className="aspect-12/9">
         {photos.map((image, idx) => (
-          <CarouselItem key={idx}>
-            <div className="relative aspect-12/9 overflow-hidden">
+          <CarouselItem key={idx} className="overflow-hidden">
+            <div className="relative size-full">
               <Image
                 src={image}
                 className="size-full object-cover"

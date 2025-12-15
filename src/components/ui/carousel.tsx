@@ -267,7 +267,7 @@ function CarouselThumb({
       className={cn(
         "size-12 md:size-16 border-2 border-transparent relative overflow-hidden cursor-pointer",
         {
-          " border-primary": selectedIndex === index,
+          "scale-105 border-primary!": selectedIndex === index,
         }
       )}
       onClick={() => onThumbClick(index)}
