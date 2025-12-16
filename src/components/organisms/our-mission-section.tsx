@@ -32,10 +32,12 @@ export default function OurMissionSection() {
                 />
               </div>
               <div>
-                <Heading variant="h4" className="mb-1">24/7 Supports</Heading>
+                <Heading variant="h4" className="mb-1">
+                  24/7 Supports
+                </Heading>
                 <Text variant="sm">
-                  Project 24/7 support means a support service that is provided
-                  24 hours a day and 7 days a week. Finished
+                  Always available to assist you and keep your operations
+                  running smoothly. txt Copy code
                 </Text>
               </div>
             </div>
@@ -49,10 +51,12 @@ export default function OurMissionSection() {
                 />
               </div>
               <div>
-                <Heading variant="h4" className="mb-1">24/7 Supports</Heading>
+                <Heading variant="h4" className="mb-1">
+                  High Quality
+                </Heading>
                 <Text variant="sm">
-                  Project 24/7 support means a support service that is provided
-                  24 hours a day and 7 days a week. Finished
+                  We deliver dependable and scalable solutions you can trust.
+                  txt Copy code
                 </Text>
               </div>
             </div>
@@ -66,10 +70,11 @@ export default function OurMissionSection() {
                 />
               </div>
               <div>
-                <Heading variant="h4" className="mb-1">24/7 Supports</Heading>
+                <Heading variant="h4" className="mb-1">
+                  Customer Focused
+                </Heading>
                 <Text variant="sm">
-                  Project 24/7 support means a support service that is provided
-                  24 hours a day and 7 days a week. Finished
+                  Your success drives everything we build.
                 </Text>
               </div>
             </div>

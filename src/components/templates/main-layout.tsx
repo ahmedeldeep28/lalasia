@@ -1,5 +1,5 @@
 import { Header } from "@/components/organisms/header";
-import { Footer } from "@/components/organisms/footer";
+import Footer from "@/components/organisms/footer";
 
 interface MainLayoutProps {
   children: React.ReactNode;

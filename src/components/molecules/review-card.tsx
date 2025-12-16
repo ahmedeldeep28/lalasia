@@ -9,7 +9,7 @@ type ReviewCardProps = {
 };
 
 export const ReviewCard = ({ review }: ReviewCardProps) => {
-  const { name, rating, comment } = review;
+  const { name, rating, comment, avatar } = review;
   return (
     <Card className="p-5 shadow h-full">
       <Image width={40} height={40} src="/icons/quote-up.png" alt="quote" />
@@ -22,7 +22,7 @@ export const ReviewCard = ({ review }: ReviewCardProps) => {
             className="rounded-full"
             width={50}
             height={50}
-            src="/team.png"
+            src={avatar}
             alt="team"
           />
           <Heading as="h4" variant="h5">

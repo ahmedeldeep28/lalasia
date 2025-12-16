@@ -1,5 +1,10 @@
 import { publicApi } from "@/lib/api";
-import { ApiResponse, Product, FilterProductParams } from "@/types";
+import {
+  ApiResponse,
+  Product,
+  FilterProductParams,
+  ProductCategory,
+} from "@/types";
 
 export async function getProducts(
   searchParams: FilterProductParams
@@ -19,6 +24,9 @@ export async function getProducts(
         },
       },
     },
+    next: {
+      revalidate: 60 * 60,
+    },
   });
   return res;
 }
@@ -33,6 +41,9 @@ export async function getProductBySlug(slug: string): Promise<Product> {
         },
       },
     },
+    next: {
+      revalidate: 60 * 60,
+    },
   });
   return data[0];
 }
@@ -46,6 +57,23 @@ export async function getPopularProducts(): Promise<ApiResponse<Product>> {
           $eq: true,
         },
       },
+    },
+    next: {
+      revalidate: 60 * 60,
+    },
+  });
+  return res;
+}
+
+export async function getProductCategories(): Promise<
+  ApiResponse<ProductCategory>
+> {
+  const res = await publicApi<ApiResponse<ProductCategory>>("/categories", {
+    params: {
+      populate: "*",
+    },
+    next: {
+      revalidate: 60 * 60,
     },
   });
   return res;

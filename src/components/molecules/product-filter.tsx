@@ -3,11 +3,13 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { Toggle } from "@/components/ui/toggle";
 import { SearchBar } from "./search-bar";
+import { use } from "react";
+import { getProductCategories } from "@/services/product-services";
 
 export const ProductFilter = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-
+  const { data: categories } = use(getProductCategories());
   const category = searchParams.get("category") || "";
 
   const updateUrl = (key: string, value: string) => {
@@ -25,16 +27,6 @@ export const ProductFilter = () => {
     updateUrl("category", newValue);
   };
 
-  const categories = [
-    "furniture",
-    "living room",
-    "dining",
-    "office",
-    "bedroom",
-    "lighting",
-    "decor",
-  ];
-
   return (
     <div className="w-full space-y-6 mb-12">
       <SearchBar />
@@ -42,12 +34,12 @@ export const ProductFilter = () => {
         <div className="flex flex-wrap gap-1">
           {categories.map((cat) => (
             <Toggle
-              key={cat}
-              pressed={cat === category}
-              onPressedChange={() => handleCategoryChange(cat)}
+              key={cat.title}
+              pressed={cat.title === category}
+              onPressedChange={() => handleCategoryChange(cat.title)}
               className={"rounded-full px-3.5"}
             >
-              {cat}
+              {cat.title}
             </Toggle>
           ))}
         </div>

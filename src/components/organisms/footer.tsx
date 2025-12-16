@@ -2,8 +2,11 @@ import Link from "next/link";
 import { Logo } from "@/components/ui/logo";
 import { Heading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
+import { getProductCategories } from "@/services/product-services";
+import { nav_links } from "@/data";
 
-export const Footer = () => {
+export default async function footer() {
+  const { data: categories } = await getProductCategories();
   return (
     <footer>
       <div className="container border-t py-16">
@@ -18,81 +21,40 @@ export const Footer = () => {
 
           <div className="col-span-4 md:col-span-2">
             <Heading as="h4" variant="h4" className="mb-3">
-              Product
+              pages
             </Heading>
             <ul className="flex flex-col gap-y-1">
-              <li>
-                <Link
-                  href="/"
-                  className="capitalize text-sm sm:text-base font-medium leading-relaxed hover:text-primary transition-colors"
-                >
-                  New Arrivals
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/"
-                  className="capitalize text-sm sm:text-base font-medium leading-relaxed hover:text-primary transition-colors"
-                >
-                  Best Selling
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/"
-                  className="capitalize text-sm sm:text-base font-medium leading-relaxed hover:text-primary transition-colors"
-                >
-                  Home Decor
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/"
-                  className="capitalize text-sm sm:text-base font-medium leading-relaxed hover:text-primary transition-colors"
-                >
-                  Kitchen Set
-                </Link>
-              </li>
+              {nav_links.map((link) => {
+                return (
+                  <li>
+                    <Link
+                      href={link.path}
+                      className="capitalize text-sm sm:text-base font-medium leading-relaxed hover:text-primary transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
           </div>
-
           <div className="col-span-4 md:col-span-2">
             <Heading as="h4" variant="h4" className="mb-3">
-              Services
+              categories
             </Heading>
-            <ul className="flex flex-col gap-y-1">
-              <li>
-                <Link
-                  href="/products"
-                  className="capitalize text-sm sm:text-base font-medium leading-relaxed hover:text-primary transition-colors"
-                >
-                  Product
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/services"
-                  className="capitalize text-sm sm:text-base font-medium leading-relaxed hover:text-primary transition-colors"
-                >
-                  Services
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/blog"
-                  className="capitalize text-sm sm:text-base font-medium leading-relaxed hover:text-primary transition-colors"
-                >
-                  Blog
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/about"
-                  className="capitalize text-sm sm:text-base font-medium leading-relaxed hover:text-primary transition-colors"
-                >
-                  About Us
-                </Link>
-              </li>
+            <ul className="flex flex-col gap-y-2">
+              {categories.map((category) => {
+                return (
+                  <li>
+                    <Link
+                      href={`/products?category=${category.title}`}
+                      className="capitalize text-sm sm:text-base font-medium leading-relaxed hover:text-primary transition-colors"
+                    >
+                      {category.title}
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
           </div>
 
@@ -131,4 +93,4 @@ export const Footer = () => {
       </div>
     </footer>
   );
-};
+}

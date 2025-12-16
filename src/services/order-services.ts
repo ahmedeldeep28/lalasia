@@ -25,6 +25,9 @@ export async function getOrderById(orderId: string): Promise<Order> {
         },
       },
     },
+    next: {
+      revalidate: 60 * 60,
+    },
   });
   return order[0];
 }

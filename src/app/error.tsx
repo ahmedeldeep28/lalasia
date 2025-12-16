@@ -9,6 +9,7 @@ export default function ErrorPage({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+  console.log(error)
   return (
     <div className="container py-20">
       <FeedbackState

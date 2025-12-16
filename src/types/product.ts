@@ -1,4 +1,4 @@
-import { StrapiAsset } from "./shard";
+import { FileMetaData, StrapiAsset } from "./shard";
 
 export interface Product {
   id: string;
@@ -28,3 +28,10 @@ export interface FilterProductParams {
   category?: string;
   page?: string;
 }
+
+
+export type ProductCategory = {
+  title: string;
+  cover: FileMetaData;
+  slug: string;
+};

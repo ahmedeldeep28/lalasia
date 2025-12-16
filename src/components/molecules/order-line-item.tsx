@@ -1,15 +1,11 @@
 "use client";
-import {
-  CartItem as CartItemType,
-  useCartStore,
-} from "@/stores/use-cart-store";
+
 import { Trash } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 import { Button } from "../ui/button";
 import { Heading } from "../ui/heading";
 import { Text } from "../ui/text";
-import { formatPrice, getStrapiMedia } from "@/lib/utils";
+import { formatPrice } from "@/lib/utils";
 
 type OrderItemProps = {
   title: string;
